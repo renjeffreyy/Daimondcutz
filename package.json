@@ -1,0 +1,29 @@
+{
+  "name": "daimondcutz",
+  "version": "1.0.0",
+  "description": "backend for daimondcutz",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server",
+    "server": "nodemon server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/renjeffreyy/Daimondcutz.git"
+  },
+  "author": "Jeffrey Ren",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/renjeffreyy/Daimondcutz/issues"
+  },
+  "homepage": "https://github.com/renjeffreyy/Daimondcutz#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.4"
+  }
+}
