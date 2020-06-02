@@ -4,8 +4,8 @@ import './App.css';
 import store from './store';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Landing from './components/landing/landing.component';
-import Login from './components/auth/login.component';
+import Landing from './components/landing/Landing.component';
+import Routes from './routing/Routes.component';
 
 function App() {
   return (
@@ -14,6 +14,7 @@ function App() {
         <Fragment>
           <Switch>
             <Route exact path="/" component={Landing} />
+            <Route component={Routes} />
           </Switch>
         </Fragment>
       </Router>
