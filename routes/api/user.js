@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
 require('dotenv');
 
 const User = require('../../models/Users');
 
-//@route    GET api/auth
+//@route    POST api/user
 //@desc     Create User and save to database
 //@access   public
 router.post(
