@@ -1,7 +1,11 @@
 import React from 'react';
 
 const Calander = () => {
-  return <div>calander</div>;
+  return (
+    <div>
+      <p>calander</p>
+    </div>
+  );
 };
 
 export default Calander;

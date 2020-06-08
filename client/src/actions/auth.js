@@ -32,22 +32,6 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
-//load user 2
-// export const loadUser = () => async (dispatch) => {
-//   if (localStorage.token) {
-//     setAuthToken(localStorage.token);
-//   }
-//   try {
-//     const response = await axios.get('/api/auth');
-//     dispatch({
-//       type: USER_LOADED,
-//       payload: response.data,
-//     });
-//   } catch (error) {
-//     dispatch({ type: AUTH_ERROR });
-//   }
-// };
-
 // Register User
 export const registerUser = (firstName, lastName, email, password) => async (
   dispatch
@@ -103,40 +87,6 @@ export const loginUser = (email, password) => async (dispatch) => {
     });
   }
 };
-
-//login user 2
-// export const loginUser = (email, password) => async (dispatch) => {
-//   const config = {
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//   };
-//   const body = JSON.stringify({ email, password });
-
-//   try {
-//     const response = await axios.post(
-//       'https://jsonplaceholder.typicode.com/todos/1'
-//     );
-//     console.log(response);
-//     dispatch({
-//       type: LOGIN_SUCCESS,
-//       payload: response.data,
-//     });
-
-//     dispatch(loadUser());
-//   } catch (error) {
-//     console.log(error);
-//     const errors = error.response.data.errors;
-//     console.log(errors);
-//     if (errors) {
-//       errors.forEach((error) => dispatch(setAlert(error.msg)));
-//     }
-
-//     dispatch({
-//       type: LOGIN_FAIL,
-//     });
-//   }
-// };
 
 //logout /clear profile
 export const logout = () => (dispatch) => {

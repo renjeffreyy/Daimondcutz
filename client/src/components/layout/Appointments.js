@@ -12,6 +12,7 @@ const Appointments = () => {
   return (
     <div>
       <Title>Appointments</Title>
+      <Calander />
     </div>
   );
 };
