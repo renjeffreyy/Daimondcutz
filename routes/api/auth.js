@@ -9,7 +9,7 @@ require('dotenv');
 const User = require('../../models/Users');
 
 //@route    GET api/auth
-//@desc     Authenticate
+//@desc     Authenticate users
 //@access   Private
 
 router.get('/', auth, async (req, res) => {

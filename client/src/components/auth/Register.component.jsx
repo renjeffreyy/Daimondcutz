@@ -86,30 +86,42 @@ const Form = styled.form`
   }
 `;
 
-const Register = ({ isAuthenticated }) => {
+const Register = ({ isAuthenticated, registerUser, setAlert }) => {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
     confirmPassword: '',
+    phoneNumber: '',
   });
 
-  const { firstName, lastName, email, password, confirmPassword } = formData;
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    confirmPassword,
+    phoneNumber,
+  } = formData;
 
   const onChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
     console.log(formData);
   };
 
-  const onSubmit = async (event) => {
+  const onSubmit = (event) => {
     event.preventDefault();
+
     if (password !== confirmPassword) {
-      setAlert('Passwords do not match');
-    } else {
-      registerUser({ firstName, lastName, email, password });
-      console.log('submitted');
+      return setAlert('Passwords do not match');
     }
+    if (!phoneNumber.match(/^\d{10}$/)) {
+      return setAlert('Please follow specified phone number format');
+    }
+
+    registerUser({ firstName, lastName, email, password, phoneNumber });
+    console.log('submitted');
   };
 
   if (isAuthenticated) {
@@ -144,6 +156,16 @@ const Register = ({ isAuthenticated }) => {
             value={email}
             onChange={onChange}
             required
+          ></input>
+          <input
+            placeholder="Phone Number"
+            type="text"
+            name="phoneNumber"
+            value={phoneNumber}
+            onChange={onChange}
+            required
+            minLength="10"
+            maxLength="10"
           ></input>
           <input
             placeholder="Password"

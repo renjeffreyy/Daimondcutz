@@ -27,10 +27,11 @@ const Calander = ({ setDate, ...props }) => {
     <Container className={props.className}>
       <p>Calendar</p>
       <Calendar
-        showFixedNumberOfWeeks="true"
+        showFixedNumberOfWeeks={true}
         tileClassName="Calendar-Tile"
         className="Calendar-Container"
         onChange={(value) => onChange(value)}
+        calendarType="ISO 8601"
       />
     </Container>
   );

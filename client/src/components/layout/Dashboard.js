@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { loadUser } from '../../actions/auth';
 
-const Dashboard = ({ auth: { user } }) => {
+const Dashboard = ({ firstName }) => {
   useEffect(() => {
     loadUser();
   }, []);
   return (
     <>
-      <p>Welcome {user.firstName}</p>
+      {firstName && <p>Welcome {firstName}</p>}
 
       <p>Upcoming appointments</p>
     </>
@@ -16,7 +16,7 @@ const Dashboard = ({ auth: { user } }) => {
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth,
+  firstName: state.auth.user.firstName,
 });
 
 export default connect(mapStateToProps, { loadUser })(Dashboard);

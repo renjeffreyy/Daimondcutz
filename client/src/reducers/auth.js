@@ -22,20 +22,22 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isAuthenticated: true,
-        loading: false,
         user: payload,
+        loading: false,
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
+      localStorage.setItem('token', payload.token);
       return {
         ...state,
-        ...payload,
+        user: payload,
         isAuthenticated: true,
         loading: false,
       };
     case ACCOUNT_DELETED:
     case AUTH_ERROR:
     case LOGOUT:
+      localStorage.removeItem('token');
       return {
         ...state,
         token: null,

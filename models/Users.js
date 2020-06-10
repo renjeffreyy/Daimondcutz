@@ -22,6 +22,16 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  phoneNumber: {
+    type: String,
+    required: true,
+    isNumeric: true,
+    isMobilePhone: {
+      options: {
+        locale: 'en-US',
+      },
+    },
+  },
 });
 
 module.exports = User = mongoose.model('user', UserSchema);

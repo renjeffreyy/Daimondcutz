@@ -100,7 +100,7 @@ const Login = ({ isAuthenticated, loginUser }) => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    loginUser(email, password);
+    await loginUser(email, password);
     console.log(formData);
   };
 

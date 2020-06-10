@@ -14,6 +14,7 @@ app.use(express.json());
 //Define Routes
 app.use('/api/user', require('./routes/api/user'));
 app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/admin', require('./routes/api/admin'));
 
 app.get('/', (req, res) => res.send('api running'));
 

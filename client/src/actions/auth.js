@@ -7,7 +7,6 @@ import {
   REGISTER_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  CLEAR_PROFILE,
   LOGOUT,
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
@@ -20,8 +19,8 @@ export const loadUser = () => async (dispatch) => {
 
   try {
     const response = await api.get('/auth');
-
-    await dispatch({
+    console.log(response);
+    dispatch({
       type: USER_LOADED,
       payload: response.data,
     });
@@ -33,14 +32,25 @@ export const loadUser = () => async (dispatch) => {
 };
 
 // Register User
-export const registerUser = (firstName, lastName, email, password) => async (
-  dispatch
-) => {
-  const body = JSON.stringify({ firstName, lastName, email, password });
-
+export const registerUser = ({
+  firstName,
+  lastName,
+  email,
+  password,
+  phoneNumber,
+}) => async (dispatch) => {
+  const body = JSON.stringify({
+    firstName,
+    lastName,
+    email,
+    password,
+    phoneNumber,
+  });
+  console.log('register action fired');
+  console.log(body);
   try {
     const response = await api.post('/user', body);
-
+    console.log(response);
     dispatch({
       type: REGISTER_SUCCESS,
       payload: response.data,
@@ -65,9 +75,7 @@ export const loginUser = (email, password) => async (dispatch) => {
 
   try {
     const response = await api.post('/auth', body);
-    // const response = await axios.post('/auth', body, config);
 
-    console.log(response);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: response.data,
@@ -77,9 +85,9 @@ export const loginUser = (email, password) => async (dispatch) => {
   } catch (error) {
     console.log(error);
     const errors = error.response.data.errors;
-    console.log(errors);
+
     if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg)));
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
     }
 
     dispatch({
@@ -89,7 +97,6 @@ export const loginUser = (email, password) => async (dispatch) => {
 };
 
 //logout /clear profile
-export const logout = () => (dispatch) => {
-  dispatch({ type: CLEAR_PROFILE });
+export const logOut = () => (dispatch) => {
   dispatch({ type: LOGOUT });
 };

@@ -20,6 +20,10 @@ router.post(
       'password',
       'Please enter a password with 6 or more characters'
     ).isLength({ min: 6 }),
+    check('phoneNumber', 'Please enter a valid 10 digit US phone number')
+      .isMobilePhone()
+      .isLength({ min: 10, max: 10 })
+      .withMessage('must be 10 digits'),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -27,7 +31,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, phoneNumber } = req.body;
 
     try {
       let user = await User.findOne({ email });
@@ -42,6 +46,7 @@ router.post(
         lastName,
         email,
         password,
+        phoneNumber,
       });
 
       const salt = await bcrypt.genSalt(3);

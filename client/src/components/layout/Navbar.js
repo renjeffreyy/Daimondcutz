@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { logOut } from '../../actions/auth';
 
 //redux
 import { connect } from 'react-redux';
@@ -17,7 +18,7 @@ const NavContainer = styled.div`
 
   .Nav {
     font-size: 2rem;
-    color: white;
+    color: red;
     font-family: 'Playfair Display', serif;
     text-decoration: none;
     margin: 50px 20px;
@@ -28,7 +29,7 @@ const NavContainer = styled.div`
   }
 `;
 
-const Navbar = ({ isAuthenticated }) => {
+const Navbar = ({ isAuthenticated, logOut }) => {
   return (
     <NavContainer>
       <Link className="Nav" to="/">
@@ -38,9 +39,14 @@ const Navbar = ({ isAuthenticated }) => {
         Appointments
       </Link>
       {isAuthenticated ? (
-        <Link className="Nav" to="/dashboard">
-          My Account
-        </Link>
+        <>
+          <Link className="Nav" to="/dashboard">
+            My Account
+          </Link>
+          <Link onClick={() => logOut()} className="Nav" to="/login">
+            Log Out
+          </Link>
+        </>
       ) : (
         <Link to="/login" className="Nav">
           Login
@@ -53,4 +59,4 @@ const Navbar = ({ isAuthenticated }) => {
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps, { logOut })(Navbar);

@@ -8,7 +8,7 @@ const Schedule = ({ availableTimes, date, ...props }) => {
   return (
     <Container className={props.className}>
       <span>
-        Appointments on <Moment format="MM/DD/YYYY" date={date} />
+        Appointments on <Moment format="YYYY-MM-DD" date={date} />
       </span>
       {availableTimes.length > 0 ? (
         availableTimes.map((time) => {

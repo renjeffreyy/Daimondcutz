@@ -1,7 +1,11 @@
 import { SET_DATE } from '../actions/types';
 
+//convert the date to iso string for moment.js
+const date = new Date();
+const iso = date.toISOString();
+
 const initialState = {
-  date: Date(),
+  date: iso,
   availableTimes: [],
 };
 
