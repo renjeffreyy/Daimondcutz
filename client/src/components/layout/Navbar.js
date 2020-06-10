@@ -38,6 +38,9 @@ const Navbar = ({ isAuthenticated, logOut }) => {
       <Link className="Nav" to="/Appointments">
         Appointments
       </Link>
+      <Link className="Nav" to="/reviews">
+        Reviews
+      </Link>
       {isAuthenticated ? (
         <>
           <Link className="Nav" to="/dashboard">

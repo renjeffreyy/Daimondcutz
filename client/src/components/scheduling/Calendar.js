@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { setDate } from '../../actions/schedule';
 
 const Container = styled.div`
-  width: 100%%;
+  width: 100%;
   height: 50%;
 
   .Calendar-Container {

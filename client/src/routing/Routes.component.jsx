@@ -8,6 +8,7 @@ import Appointments from '../components/layout/Appointments';
 import Alert from '../components/layout/Alert';
 import PrivateRoute from './PrivateRoutes.component';
 import Dashboard from '../components/layout/Dashboard';
+import ReviewContainer from '../components/layout/ReviewContainer';
 
 const Routes = (props) => {
   return (
@@ -17,6 +18,7 @@ const Routes = (props) => {
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/Appointments" component={Appointments} />
+        <Route exact path="/reviews" component={ReviewContainer} />
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
       </Switch>
     </section>
