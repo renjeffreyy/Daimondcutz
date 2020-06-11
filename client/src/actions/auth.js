@@ -19,7 +19,7 @@ export const loadUser = () => async (dispatch) => {
 
   try {
     const response = await api.get('/auth');
-    console.log(response);
+
     dispatch({
       type: USER_LOADED,
       payload: response.data,
@@ -46,11 +46,10 @@ export const registerUser = ({
     password,
     phoneNumber,
   });
-  console.log('register action fired');
-  console.log(body);
+
   try {
     const response = await api.post('/user', body);
-    console.log(response);
+
     dispatch({
       type: REGISTER_SUCCESS,
       payload: response.data,
