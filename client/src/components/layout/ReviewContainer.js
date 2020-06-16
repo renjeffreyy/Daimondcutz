@@ -17,7 +17,7 @@ const Container = styled.div`
   .userReviews {
     grid-row: 3 /7;
     grid-column: 3/9;
-    background-color: red;
+    background-color: white;
   }
 
   .reviewSubmission {

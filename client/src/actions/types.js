@@ -11,4 +11,4 @@ export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
 export const SET_DATE = 'SET_DATE';
 export const GET_REVIEW = 'GET_REVIEW';
-export const POST_REVIEW = 'POST_REVIEW';
+export const GET_SCHEDULE_ON_DATE = 'GET_SCHEDULE_ON_DATE';

@@ -1,4 +1,4 @@
-import { SET_DATE } from '../actions/types';
+import { SET_DATE, GET_SCHEDULE_ON_DATE } from '../actions/types';
 
 //convert the date to iso string for moment.js
 const date = new Date();
@@ -16,6 +16,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         date: payload,
+      };
+    case GET_SCHEDULE_ON_DATE:
+      return {
+        ...state,
+        availableTimes: [...payload],
       };
     default:
       return state;

@@ -2,7 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
-const Container = styled.div``;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row-gap;
+  flex-wrap: wrap;
+  .availableTimes {
+    flex-basis: 100%;
+  }
+`;
 
 const Schedule = ({ availableTimes, date, ...props }) => {
   return (
@@ -12,7 +20,14 @@ const Schedule = ({ availableTimes, date, ...props }) => {
       </span>
       {availableTimes.length > 0 ? (
         availableTimes.map((time) => {
-          return <p>{time}</p>;
+          return (
+            <Moment
+              key={availableTimes.indexOf(time)}
+              className="availableTimes"
+              format="MMMM Do YYYY, h:mm:ss a"
+              date={time}
+            />
+          );
         })
       ) : (
         <p>no available times!</p>

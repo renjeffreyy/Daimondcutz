@@ -20,7 +20,7 @@ const Container = styled.div`
 
 const Calander = ({ setDate, ...props }) => {
   const onChange = (value) => {
-    setDate(value);
+    setDate({ date: value });
   };
 
   return (

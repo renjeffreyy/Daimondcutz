@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-require('dotenv');
+require('dotenv').config();
 const verifyAdmin = require('../../middleware/verifyAdmin');
 
 //@route    POST api/admin/appointments

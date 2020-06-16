@@ -1,6 +1,6 @@
 import api from '../utils/api';
 import { setAlert } from './alert';
-import { GET_REVIEW, POST_REVIEW } from './types';
+import { GET_REVIEW } from './types';
 
 export const fetchReviews = () => async (dispatch) => {
   console.log('fetch review action fired');
