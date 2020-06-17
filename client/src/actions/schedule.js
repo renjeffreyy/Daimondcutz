@@ -1,6 +1,7 @@
 import { SET_DATE, GET_SCHEDULE_ON_DATE } from './types';
 import api from '../utils/api';
 import moment from 'moment';
+import { setAlert } from './alert';
 
 export const setDate = ({ date }) => async (dispatch) => {
   dispatch({ type: SET_DATE, payload: date });
@@ -8,14 +9,10 @@ export const setDate = ({ date }) => async (dispatch) => {
 };
 
 export const getEvents = ({ date }) => async (dispatch) => {
-  console.log('get events action firing');
   const body = JSON.stringify({ date });
-  console.log(body);
-  console.log(typeof body);
 
   try {
     const res = await api.post('/calendar', body);
-    console.log(res);
     dispatch(getAvailableTimes(res.data, date));
     // dispatch({
     //   type: GET_SCHEDULE_ON_DATE,
@@ -60,11 +57,34 @@ export const getAvailableTimes = (busyTimes, date) => async (dispatch) => {
     return moment(timeSlot).format();
   });
 
-  console.log('available times action firing');
-  console.log('the date we are checking is ', startOfDay);
-  console.log(startOfDay, endOfDay);
-  console.log(moment(startOfDay).format(), moment(endOfDay).format());
-  console.log(freeBlock);
-  console.log(availableTimeSlots);
+  // console.log('available times action firing');
+  // console.log('the date we are checking is ', startOfDay);
+  // console.log(startOfDay, endOfDay);
+  // console.log(moment(startOfDay).format(), moment(endOfDay).format());
+  // console.log(freeBlock);
+  // console.log(availableTimeSlots);
   dispatch({ type: GET_SCHEDULE_ON_DATE, payload: availableTimeSlots });
+};
+
+export const bookAppointment = (time) => async (dispatch) => {
+  const body = JSON.stringify({ date: time });
+  console.log(body);
+
+  try {
+    const res = await api.post('/calendar/appointments', body);
+    console.log('here is the resposne', res);
+
+    if (res.status == 200) {
+      // dispatch(
+      //   setAlert(
+      //     `your appointment has been booked for ${moment(time).format(
+      //       'MMMM Do YYYY, h:mm a'
+      //     )}`
+      //   )
+      // );
+      dispatch(setAlert(res.data.msg));
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };

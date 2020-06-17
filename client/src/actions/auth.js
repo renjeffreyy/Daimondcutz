@@ -71,8 +71,7 @@ export const registerUser = ({
 // login user
 export const loginUser = (email, password) => async (dispatch) => {
   const body = JSON.stringify({ email, password });
-  console.log(body);
-  console.log(typeof body);
+
   try {
     const response = await api.post('/auth', body);
 

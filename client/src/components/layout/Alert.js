@@ -1,14 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+
+const AlertDiv = styled.div`
+  width: 100vw;
+  padding: 10px;
+  background-color: red;
+`;
 
 const Alert = ({ alerts }) =>
   alerts !== null &&
   alerts.length > 0 &&
   alerts.map((alert) => (
-    <div key={alert.id} className={`${alert.alertType}`}>
+    <AlertDiv key={alert.id} className={`${alert.alertType}`}>
       {alert.msg}
-    </div>
+    </AlertDiv>
   ));
 
 Alert.propTypes = {

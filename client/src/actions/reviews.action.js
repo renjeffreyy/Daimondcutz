@@ -34,12 +34,8 @@ export const postReview = ({
     date,
   });
 
-  console.log('post review action fired');
-  console.log(body);
-
   try {
     const response = await api.post('/reviews', body);
-    console.log(response);
 
     dispatch(fetchReviews());
     dispatch(setAlert(response.data));

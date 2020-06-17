@@ -26,11 +26,11 @@ const event = {
   description: 'meeting with David',
   start: {
     dateTime: eventStartTime,
-    timeZone: 'America/Denver',
+    timeZone: 'America/Los_Angeles',
   },
   end: {
     dateTime: eventEndTime,
-    timeZone: 'America/Denver',
+    timeZone: 'America/Los_Angeles',
   },
   colorId: 1,
 };
@@ -56,33 +56,33 @@ const test = async () => {
 
 test();
 
-// calendar.freebusy.query(
-//   {
-//     resource: {
-//       timeMin: eventStartTime,
-//       timeMax: eventEndTime,
-//       timeZone: 'America/Denver',
-//       items: [{ id: 'primary' }],
-//     },
-//   },
-//   (err, res) => {
-//     if (err) return console.error('free Busy Query Error: ', err);
+calendar.freebusy.query(
+  {
+    resource: {
+      timeMin: eventStartTime,
+      timeMax: eventEndTime,
+      timeZone: 'America/Denver',
+      items: [{ id: 'primary' }],
+    },
+  },
+  (err, res) => {
+    if (err) return console.error('free Busy Query Error: ', err);
 
-//     const eventsArray = res.data.calendars.primary.busy;
+    const eventsArray = res.data.calendars.primary.busy;
 
-//     if (eventsArray.length === 0) {
-//       return calendar.events.insert(
-//         {
-//           calendarId: 'primary',
-//           resource: event,
-//         },
-//         (err) => {
-//           if (err) return console.error('Calendar Event Creation Error: ', err);
+    if (eventsArray.length === 0) {
+      return calendar.events.insert(
+        {
+          calendarId: 'primary',
+          resource: event,
+        },
+        (err) => {
+          if (err) return console.error('Calendar Event Creation Error: ', err);
 
-//           return console.log('calendar event created.');
-//         }
-//       );
-//     }
-//     return console.log('sorry i busy');
-//   }
-// );
+          return console.log('calendar event created.');
+        }
+      );
+    }
+    return console.log('sorry i busy');
+  }
+);
