@@ -1,11 +1,31 @@
-import { SET_DATE, GET_SCHEDULE_ON_DATE } from './types';
+import {
+  SET_DATE,
+  GET_SCHEDULE_ON_DATE,
+  LOAD_APPOINTMENTS,
+  CLEAR_DATES,
+} from './types';
 import api from '../utils/api';
 import moment from 'moment';
 import { setAlert } from './alert';
 
 export const setDate = ({ date }) => async (dispatch) => {
-  dispatch({ type: SET_DATE, payload: date });
-  await dispatch(getEvents({ date }));
+  try {
+    const todaysDate = new Date();
+    const momentToday = moment(todaysDate).startOf('day').unix() * 1000;
+    const reqDate = date.getTime();
+
+    if (momentToday > reqDate) {
+      dispatch(
+        setAlert('That date has already passed. Please pick another date')
+      );
+      dispatch({ type: CLEAR_DATES, payload: date });
+    } else {
+      dispatch({ type: SET_DATE, payload: date });
+      await dispatch(getEvents({ date }));
+    }
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const getEvents = ({ date }) => async (dispatch) => {
@@ -14,10 +34,6 @@ export const getEvents = ({ date }) => async (dispatch) => {
   try {
     const res = await api.post('/calendar', body);
     dispatch(getAvailableTimes(res.data, date));
-    // dispatch({
-    //   type: GET_SCHEDULE_ON_DATE,
-    //   payload: res.data,
-    // });
   } catch (error) {
     console.log(error);
   }
@@ -57,12 +73,6 @@ export const getAvailableTimes = (busyTimes, date) => async (dispatch) => {
     return moment(timeSlot).format();
   });
 
-  // console.log('available times action firing');
-  // console.log('the date we are checking is ', startOfDay);
-  // console.log(startOfDay, endOfDay);
-  // console.log(moment(startOfDay).format(), moment(endOfDay).format());
-  // console.log(freeBlock);
-  // console.log(availableTimeSlots);
   dispatch({ type: GET_SCHEDULE_ON_DATE, payload: availableTimeSlots });
 };
 
@@ -74,16 +84,38 @@ export const bookAppointment = (time) => async (dispatch) => {
     const res = await api.post('/calendar/appointments', body);
     console.log('here is the resposne', res);
 
-    if (res.status == 200) {
-      // dispatch(
-      //   setAlert(
-      //     `your appointment has been booked for ${moment(time).format(
-      //       'MMMM Do YYYY, h:mm a'
-      //     )}`
-      //   )
-      // );
+    if (res.status === 200) {
+      dispatch(
+        setAlert(
+          `your appointment has been booked for ${moment(time).format(
+            'MMMM Do YYYY, h:mm a'
+          )}`
+        )
+      );
       dispatch(setAlert(res.data.msg));
+      dispatch(getMyAppointments());
     }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getMyAppointments = () => async (dispatch) => {
+  try {
+    const res = await api.get('/calendar/appointments');
+    console.log(res);
+    dispatch({ type: LOAD_APPOINTMENTS, payload: res.data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const cancelAppointment = (appointmentId) => async (dispatch) => {
+  try {
+    const res = await api.delete(`/calendar/appointments/${appointmentId}`);
+    console.log(res);
+    dispatch(setAlert('appointment deleted!'));
+    dispatch(getMyAppointments());
   } catch (error) {
     console.log(error);
   }

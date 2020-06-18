@@ -16,6 +16,7 @@ const Container = styled.div`
 `;
 
 const Schedule = ({
+  myAppointments,
   isAuthenticated,
   bookAppointment,
   availableTimes,
@@ -34,6 +35,11 @@ const Schedule = ({
     console.log(appointmentDate);
   };
 
+  const appointmentCheck = (app) => {
+    const todaysDate = new Date().getTime();
+    return moment(app.startTime).unix() * 1000 > todaysDate;
+  };
+
   const onSubmit = (event) => {
     event.preventDefault();
     if (isAuthenticated === false) {
@@ -41,6 +47,8 @@ const Schedule = ({
       setAppointmentDate({
         appointment: null,
       });
+    } else if (myAppointments.filter(appointmentCheck).length > 0) {
+      setAlert('You already have an appointment scheduled!');
     } else {
       bookAppointment(appointmentDate.appointment);
       setAppointmentDate({
@@ -80,7 +88,13 @@ const Schedule = ({
           <></>
         ) : (
           <>
-            <label>confirm your appointment for</label>
+            <label>
+              Confirm your appointment for{' '}
+              {moment(appointmentDate.appointment).format(
+                'MMMM Do YYYY, h:mm a'
+              )}
+              .
+            </label>
             <input type="submit" value="confirm" />
             <input
               type="button"
@@ -98,6 +112,7 @@ const mapStateToProps = (state) => ({
   date: state.schedule.date,
   availableTimes: state.schedule.availableTimes,
   isAuthenticated: state.auth.isAuthenticated,
+  myAppointments: state.schedule.appointments,
 });
 
 export default connect(mapStateToProps, { setAlert, bookAppointment })(

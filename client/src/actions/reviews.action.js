@@ -3,7 +3,6 @@ import { setAlert } from './alert';
 import { GET_REVIEW } from './types';
 
 export const fetchReviews = () => async (dispatch) => {
-  console.log('fetch review action fired');
   try {
     const reviews = await api.get('/reviews');
 

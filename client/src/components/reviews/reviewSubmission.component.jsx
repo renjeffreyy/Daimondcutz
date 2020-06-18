@@ -41,7 +41,7 @@ const ReviewSubmission = ({
     userLastName: reduxUserLastName,
     userFirstName: reduxUserFirstName,
     reviewText: '',
-    stars: 5,
+    stars: '',
     date: isoDate,
   });
 
@@ -49,6 +49,7 @@ const ReviewSubmission = ({
 
   const onChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
+    console.log(formData);
   };
 
   const resetForm = () => {
@@ -74,6 +75,14 @@ const ReviewSubmission = ({
           value={reviewText}
           max-length="250"
           min-length="1"
+        />
+        <input
+          type="number"
+          min="1"
+          max="5"
+          value={stars}
+          name="stars"
+          onChange={onChange}
         />
         <input className="button" type="submit" value="submit review" />
       </Form>

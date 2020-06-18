@@ -19,7 +19,7 @@ module.exports = function (req, res, next) {
       }
 
       if (req.user.id !== process.env.adminId) {
-        throw error;
+        return res.status(401).json({ msg: 'unauthenticated' });
       }
       next();
     });

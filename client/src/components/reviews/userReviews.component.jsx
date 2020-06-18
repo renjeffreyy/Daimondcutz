@@ -46,10 +46,11 @@ const UserReview = ({ reviews, fetchReviews, className }) => {
       {reviews.length > 0 &&
         reviews.map((items) => {
           return (
-            <div className="reviewContainer">
-              <div className="reviewBubble" key={items._id}>
+            <div key={items._id} className="reviewContainer">
+              <div className="reviewBubble">
                 <p className="userName">
-                  {items.userFirstName} {items.userLastName}{' '}
+                  {items.userFirstName} {items.userLastName} {items.stars} /5
+                  stars
                   <span className="date">
                     <Moment date={items.date} format="MM/DD/YYYY" />
                   </span>

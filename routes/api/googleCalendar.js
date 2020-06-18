@@ -6,6 +6,7 @@ const { OAuth2 } = google.auth;
 const moment = require('moment');
 const auth = require('../../middleware/auth');
 const User = require('../../models/Users');
+const Appointment = require('../../models/appointments.model');
 
 //authorization credentials for app
 const oAuth2Client = new OAuth2(process.env.clientID, process.env.clientSecret);
@@ -63,7 +64,7 @@ router.post('/appointments', auth, async (req, res) => {
 
   const timeZone = 'America/Los_Angeles';
   const start = date;
-  const end = moment(new Date(date)).add(45, 'm').toDate();
+  const end = moment(new Date(date)).add(45, 'm').toISOString();
   console.log(start, end);
   console.log(
     moment(start).format('MMMM Do YYYY, h:mm:ss a'),
@@ -111,10 +112,16 @@ router.post('/appointments', auth, async (req, res) => {
               calendarId: 'primary',
               resource: event,
             },
-            (err) => {
-              if (err)
+            async (err) => {
+              if (err) {
                 return console.error('Calendar Event Creation Error: ', err);
-
+              }
+              const appointment = new Appointment({
+                userId: user.id,
+                startTime: start,
+                endTime: end,
+              });
+              await appointment.save();
               return res.status(200).json([
                 {
                   msg: `event scheduled for ${user.firstName} ${user.lastName}`,
@@ -129,6 +136,76 @@ router.post('/appointments', auth, async (req, res) => {
     );
   } catch (error) {
     console.error(error);
+  }
+});
+
+//@route    GET api/calendar/appointments
+//@desc     get users all appointments in database
+//@access   private
+router.get('/appointments', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    const appointment = await Appointment.find({ userId: user.id });
+
+    res.status(200).json(appointment);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+//@route    delete api/calendar/appointments/id
+//@desc     delete user's appointments that have not already passed
+//@access   private
+router.delete('/appointments/:id', auth, async (req, res) => {
+  try {
+    const appointment = await Appointment.findById(req.params.id);
+
+    //check to see if appointment exists
+    if (!appointment) {
+      return res.status(401).json({ msg: 'appointment does not exist' });
+    }
+
+    //check if appointment belongs to user
+    if (appointment.userId.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'User not authorized' });
+    }
+    console.log(appointment);
+    await appointment.remove();
+    console.log(appointment);
+
+    const start = appointment.startTime;
+    const end = appointment.endTime;
+
+    calendar.events.list(
+      { calendarId: 'primary', timeMin: start, timeMax: end },
+      (error, response) => {
+        if (error) {
+          console.log('error with listing google event: ', error);
+        }
+
+        const eventId = response.data.items[0].id;
+        console.log(eventId);
+
+        calendar.events.delete(
+          {
+            calendarId: 'primary',
+            eventId: eventId,
+          },
+          (error, response) => {
+            if (error) {
+              console.log('error with deleting event: ', error);
+            }
+            console.log('event deleted');
+          }
+        );
+      }
+    );
+
+    // console.log(eventId)
+    res.json({ msg: 'appointment removed' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server Error');
   }
 });
 
