@@ -9,7 +9,7 @@ import Side from '../../assets/side_cut.JPG';
 import { connect } from 'react-redux';
 
 const Container = styled.div`
-  background-image: url(${(props) => props.img});
+  background-image: url(${TableBlur});
   /* width: 100vw; */
   height: 100vh;
   background-size: cover;
@@ -18,7 +18,11 @@ const Container = styled.div`
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(7, 1fr);
   background-attachment: fixed;
+  overflow: hidden;
 
+  @media only screen and (max-width: 700px) {
+    background-image: url(${Side});
+  }
   .appointment-link {
     grid-column: 4 / 5;
     grid-row: 6/ 7;
@@ -61,12 +65,11 @@ const Landing = ({ isAuthenticated }) => {
   return (
     <Fragment>
       <Container>
-        <ImgContainer img={TableBlur}></ImgContainer>
+        {/* <ImgContainer img={TableBlur}></ImgContainer> */}
         <Link className="appointment-link" to="/Appointments">
           <Button>Appointments</Button>
         </Link>
       </Container>
-      <Container img={Side}></Container>
     </Fragment>
   );
 };

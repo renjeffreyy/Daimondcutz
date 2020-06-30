@@ -12,16 +12,16 @@ import ReviewContainer from '../components/layout/ReviewContainer';
 
 const Routes = (props) => {
   return (
-    <section>
+    <>
       <Alert />
       <Switch>
+        <PrivateRoute exact path="/dashboard" component={Dashboard} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/Appointments" component={Appointments} />
         <Route exact path="/reviews" component={ReviewContainer} />
-        <PrivateRoute exact path="/dashboard" component={Dashboard} />
       </Switch>
-    </section>
+    </>
   );
 };
 

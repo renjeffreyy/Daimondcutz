@@ -9,14 +9,15 @@ const Container = styled.div``;
 
 const Form = styled.form`
   display: flex;
-  justify-content: center;
+
   flex-direction: row;
   flex-wrap: wrap;
 
   textarea {
     display: flex;
-    flex-basis: 90%;
+    flex-basis: 100%;
     height: 100px;
+    margin: auto;
   }
 
   .button {
@@ -24,6 +25,33 @@ const Form = styled.form`
     width: 100px;
     height: 30px;
   }
+`;
+
+const Title = styled.p`
+  margin: 10px 0px;
+`;
+
+const Radio = styled.input`
+  width: 30px;
+  height: 30px;
+`;
+
+const TextArea = styled.textarea`
+  width: 100%;
+`;
+
+const SubmitButton = styled.input`
+  /* width: 100px; */
+  height: 60px;
+  &:hover {
+    background-color: #343a40;
+    color: rgba(255, 255, 255, 0.75);
+  }
+`;
+
+const Span = styled.span`
+  flex-basis: 100%;
+  margin-top: 10px;
 `;
 
 const ReviewSubmission = ({
@@ -65,9 +93,9 @@ const ReviewSubmission = ({
 
   return (
     <Container className={className}>
-      <p>Submit a review</p>
+      <Title>Submit a review</Title>
       <Form onSubmit={onSubmit}>
-        <textarea
+        <TextArea
           type="text"
           required
           onChange={onChange}
@@ -76,15 +104,20 @@ const ReviewSubmission = ({
           max-length="250"
           min-length="1"
         />
-        <input
-          type="number"
-          min="1"
-          max="5"
-          value={stars}
-          name="stars"
-          onChange={onChange}
-        />
-        <input className="button" type="submit" value="submit review" />
+        <Span>
+          <label>Rate your experience!</label>
+          <Radio
+            type="number"
+            min="1"
+            max="5"
+            value={stars}
+            name="stars"
+            onChange={onChange}
+            placeholder="5"
+            required
+          />
+        </Span>
+        <SubmitButton className="button" type="submit" value="submit" />
       </Form>
     </Container>
   );

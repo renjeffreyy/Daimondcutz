@@ -42,3 +42,13 @@ export const postReview = ({
     console.log(error);
   }
 };
+
+export const deleteReview = (id) => async (dispatch) => {
+  try {
+    const response = await api.delete(`/reviews/${id}`);
+    dispatch(fetchReviews());
+    dispatch(setAlert(response.data.msg));
+  } catch (error) {
+    console.error(error);
+  }
+};

@@ -2,17 +2,67 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { loadUser } from '../../actions/auth';
 import { getMyAppointments, cancelAppointment } from '../../actions/schedule';
-import { fetchReviews } from '../../actions/reviews.action';
+import { fetchReviews, deleteReview } from '../../actions/reviews.action';
 import Moment from 'react-moment';
 import moment from 'moment';
+import { setAlert } from '../../actions/alert';
+import styled from 'styled-components';
+
+const DashboardContainer = styled.div`
+  .welcome {
+    text-align: center;
+    font-size: 2rem;
+    margin: 10px;
+  }
+`;
+
+const AppointmentsDiv = styled.div`
+  grid-row: 3/7;
+  grid-column: 1/3;
+  border: 2px solid black;
+  margin: 20px 20px;
+  overflow: scroll;
+  height: 300px;
+
+  .upcomingAppts {
+    font-size: 1.2rem;
+    margin: 10px 20px;
+  }
+
+  .appts {
+    margin: 0px 20px;
+  }
+`;
+
+const ReviewsDiv = styled(AppointmentsDiv)`
+  .reviewTitle {
+    font-size: 1.2rem;
+    margin: 10px 20px;
+  }
+
+  .reviews {
+    margin: 0px 20px;
+  }
+
+  .deleteBtn {
+    color: red;
+    display: inline-block;
+
+    &:hover {
+      color: darkcyan;
+    }
+  }
+`;
 
 const Dashboard = ({
   cancelAppointment,
+  setAlert,
   fetchReviews,
   myAppointments,
   firstName,
   getMyAppointments,
   reviews,
+  deleteReview,
   id,
 }) => {
   useEffect(() => {
@@ -21,75 +71,82 @@ const Dashboard = ({
     fetchReviews();
   }, [getMyAppointments, fetchReviews]);
 
-  const [btnDisplay, setBtnDisplay] = useState(false);
+  const [btnDisplay, setBtnDisplay] = useState({
+    confirmCancelAppt: false,
+  });
 
   const cancelAppClick = (id) => {
     cancelAppointment(id);
     console.log('appointment canceled clicked for: ', id);
   };
 
+  const deleteUserReview = (id) => {
+    deleteReview(id);
+    console.log(id);
+  };
+
   const todaysDate = new Date().getTime();
   return (
-    <>
-      {firstName && <p>Welcome {firstName}</p>}
-
-      <p>Upcoming appointments</p>
-      {myAppointments
-        .filter((app) => {
-          return moment(app.startTime).unix() * 1000 > todaysDate;
-        })
-        .map((app) => {
-          return (
-            <div key={app._id}>
-              <p>
-                <Moment
-                  date={app.startTime}
-                  format="dddd MMMM Do YYYY, h:mm a"
-                />{' '}
-                -{' '}
-                <Moment format="dddd MMMM Do YYYY, h:mm a" date={app.endTime} />
-              </p>
-              <button onClick={() => setBtnDisplay(true)}>
-                Cancel Appointment
-              </button>
-
-              {btnDisplay && (
-                <button onClick={() => cancelAppClick(app._id)}>
-                  Confirm Cancelation
+    <DashboardContainer className="container">
+      {firstName && <p className="welcome">Welcome {firstName}</p>}
+      <AppointmentsDiv>
+        <p className="upcomingAppts">Upcoming Appointments</p>
+        {myAppointments
+          .filter((app) => {
+            return moment(app.startTime).unix() * 1000 > todaysDate;
+          })
+          .map((app) => {
+            return (
+              <div key={app._id} className="appts">
+                <p>
+                  <Moment
+                    date={app.startTime}
+                    format="dddd MMMM Do YYYY, h:mm a"
+                  />
+                </p>
+                <button
+                  onClick={() => setBtnDisplay({ confirmCancelAppt: true })}
+                >
+                  Cancel Appointment
                 </button>
-              )}
-            </div>
-          );
-        })}
 
-      <p>Appointment History</p>
-      {myAppointments
-        .filter((app) => {
-          return moment(app.startTime).unix() * 1000 < todaysDate;
-        })
-        .map((app) => {
-          return (
-            <div key={app._id}>
-              <p>
-                <Moment
-                  date={app.startTime}
-                  format="dddd MMMM Do YYYY, h:mm a"
-                />{' '}
-                -{' '}
-                <Moment format="dddd MMMM Do YYYY, h:mm a" date={app.endTime} />
-              </p>
-            </div>
-          );
-        })}
-      <div>
-        <p>Your Reviews</p>
+                {btnDisplay.confirmCancelAppt && (
+                  <button onClick={() => cancelAppClick(app._id)}>
+                    Confirm Cancelation
+                  </button>
+                )}
+              </div>
+            );
+          })}
+
+        <p className="upcomingAppts">Appointment History</p>
+        {myAppointments
+          .filter((app) => {
+            return moment(app.startTime).unix() * 1000 < todaysDate;
+          })
+          .map((app) => {
+            return (
+              <div key={app._id} className="appts">
+                <p>
+                  <Moment
+                    date={app.startTime}
+                    format="dddd MMMM Do YYYY, h:mm a"
+                  />
+                </p>
+              </div>
+            );
+          })}
+      </AppointmentsDiv>
+
+      <ReviewsDiv>
+        <p className="reviewTitle">Your Reviews</p>
         {reviews
           .filter((review) => {
             return review.userId === id;
           })
           .map((review) => {
             return (
-              <div key={review._id}>
+              <div key={review._id} className="reviews">
                 <p className="userName">
                   {review.userFirstName} {review.userLastName}{' '}
                   <span className="date">
@@ -97,11 +154,19 @@ const Dashboard = ({
                   </span>
                 </p>
                 <p>{review.reviewText}</p>
+                <div>
+                  <p
+                    className="deleteBtn"
+                    onClick={() => deleteUserReview(review._id)}
+                  >
+                    Delete
+                  </p>
+                </div>
               </div>
             );
           })}
-      </div>
-    </>
+      </ReviewsDiv>
+    </DashboardContainer>
   );
 };
 
@@ -117,4 +182,6 @@ export default connect(mapStateToProps, {
   getMyAppointments,
   cancelAppointment,
   fetchReviews,
+  setAlert,
+  deleteReview,
 })(Dashboard);

@@ -14,6 +14,7 @@ const initialState = {
   date: iso,
   availableTimes: [],
   appointments: [],
+  showScheduleInstructions: true,
 };
 
 export default (state = initialState, action) => {
@@ -23,6 +24,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         date: payload,
+        showScheduleInstructions: false,
       };
     case GET_SCHEDULE_ON_DATE:
       return {
@@ -46,6 +48,7 @@ export default (state = initialState, action) => {
         date: iso,
         availableTimes: [],
         appointments: [],
+        showScheduleInstructions: false,
       };
     default:
       return state;

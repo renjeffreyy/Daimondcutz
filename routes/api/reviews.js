@@ -71,4 +71,25 @@ router.post(
   }
 );
 
+//@route    DELETE api/reviews/:id
+//@desc     delete reviews from database
+//@access   private
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    const review = await Review.findById(req.params.id);
+
+    //check if review belongs to the user
+    if (review.userId.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'User not authorized' });
+    }
+
+    review.remove();
+
+    res.json({ msg: 'Review removed' });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 module.exports = router;

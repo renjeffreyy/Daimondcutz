@@ -120,3 +120,11 @@ export const cancelAppointment = (appointmentId) => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const removeScheduledAppointment = (date, appointmentsArray) => (
+  dispatch
+) => {
+  const newApptArray = appointmentsArray.filter((appt) => appt !== date);
+  console.log(date, newApptArray);
+  dispatch({ type: GET_SCHEDULE_ON_DATE, payload: newApptArray });
+};

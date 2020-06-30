@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 //components
 import Landing from './components/layout/Landing.component';
-import Navbar from './components/layout/Navbar';
+import Navbars from './components/layout/Navbar';
 import Routes from './routing/Routes.component';
 
 //redux
@@ -23,7 +23,7 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Fragment>
-          <Navbar />
+          <Navbars />
           <Switch>
             <Route exact path="/" component={Landing} />
             <Route component={Routes} />
