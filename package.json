@@ -7,7 +7,8 @@
     "start": "node server",
     "server": "nodemon server",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "repository": {
     "type": "git",
@@ -27,7 +28,8 @@
     "googleapis": "^52.1.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.26.0",
-    "mongoose": "^5.9.16"
+    "mongoose": "^5.9.16",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "concurrently": "^5.2.0",
