@@ -6,8 +6,10 @@ import styled from 'styled-components';
 const AlertDiv = styled.div`
   width: 100vw;
   padding: 10px;
-  /* background-color: red; */
-  color: white;
+  flex-basis: 100%;
+  background-color: red;
+
+  /* position: absolute; */
 `;
 
 const Alert = ({ alerts }) =>

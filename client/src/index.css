@@ -8,18 +8,30 @@ body {
   padding: 0;
 }
 
+#root {
+  background-color: #f0efeb;
+  min-height: 100vh;
+}
+
 p {
-  font-family: var(--font);
+  font-family: var(--font) !important;
 }
 
 label {
-  font-family: var(--font);
+  font-family: var(--font) !important;
 }
 
 button {
-  font-family: var(--font);
+  font-family: var(--font) !important;
 }
 
 input {
-  font-family: var(--font);
+  font-family: var(--font) !important;
+}
+h1 {
+  font-family: var(--font) !important;
+}
+
+time {
+  font-family: var(--font) !important;
 }

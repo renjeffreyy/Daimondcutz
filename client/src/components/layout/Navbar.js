@@ -11,12 +11,18 @@ import Alert from '../layout/Alert';
 import { connect } from 'react-redux';
 
 const NavContainer = styled.div`
+  position: fixed;
   img {
     height: 50px;
   }
   .navbar-logo-link {
     padding: 0;
   }
+`;
+
+const AlertContainer = styled.div`
+  /* margin-top: 75px; */
+  position: absolute;
 `;
 
 const Navbars = ({ isAuthenticated, logOut }) => {
@@ -63,14 +69,21 @@ const Navbars = ({ isAuthenticated, logOut }) => {
                 </Nav.Link>
               </>
             ) : (
-              <Nav.Link href="/login" className="Nav">
-                Login
-              </Nav.Link>
+              <>
+                <Nav.Link href="/login" className="Nav">
+                  Login
+                </Nav.Link>
+                <Nav.Link href="/register" className="Nav">
+                  Register
+                </Nav.Link>
+              </>
             )}
           </Nav>
         </Navbar.Collapse>
-        <Alert />
       </Navbar>
+      <AlertContainer>
+        <Alert />
+      </AlertContainer>
     </NavContainer>
   );
 };

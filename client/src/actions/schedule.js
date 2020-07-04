@@ -44,7 +44,6 @@ export const getAvailableTimes = (busyTimes, date) => async (dispatch) => {
   const endOfDay = new Date(date).setHours(23, 59, 59, 999);
   const haircutLength = 2700000; /* time it takes for 1 haircut 45 minutes in miliseconds*/
   const freeBlock = [];
-  console.log('these are the blockec out times', busyTimes);
 
   const unavailableTimes = busyTimes.map((time) => {
     return {
@@ -52,7 +51,6 @@ export const getAvailableTimes = (busyTimes, date) => async (dispatch) => {
       end: new Date(time.end).getTime(),
     };
   });
-  console.log('these are the busy time', unavailableTimes);
 
   for (let i = startOfDay; i < endOfDay; i += haircutLength) {
     let check = true;
@@ -67,8 +65,6 @@ export const getAvailableTimes = (busyTimes, date) => async (dispatch) => {
     }
   }
 
-  console.log('these are the times outside of busy times: ', freeBlock);
-
   const availableTimeSlots = freeBlock.map((timeSlot) => {
     return moment(timeSlot).format();
   });
@@ -78,11 +74,9 @@ export const getAvailableTimes = (busyTimes, date) => async (dispatch) => {
 
 export const bookAppointment = (time) => async (dispatch) => {
   const body = JSON.stringify({ date: time });
-  console.log(body);
 
   try {
     const res = await api.post('/calendar/appointments', body);
-    console.log('here is the resposne', res);
 
     if (res.status === 200) {
       dispatch(
@@ -112,7 +106,7 @@ export const getMyAppointments = () => async (dispatch) => {
 export const cancelAppointment = (appointmentId) => async (dispatch) => {
   try {
     const res = await api.delete(`/calendar/appointments/${appointmentId}`);
-    console.log(res);
+
     dispatch(setAlert('appointment deleted!'));
     dispatch(getMyAppointments());
   } catch (error) {

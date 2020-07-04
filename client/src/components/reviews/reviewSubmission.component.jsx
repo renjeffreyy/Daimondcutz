@@ -77,7 +77,6 @@ const ReviewSubmission = ({
 
   const onChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
-    console.log(formData);
   };
 
   const resetForm = () => {
@@ -87,7 +86,7 @@ const ReviewSubmission = ({
   const onSubmit = (event) => {
     event.preventDefault();
     postReview(formData);
-    console.log(formData);
+
     resetForm();
   };
 

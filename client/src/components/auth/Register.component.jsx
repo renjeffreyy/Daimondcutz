@@ -10,6 +10,7 @@ import { registerUser } from '../../actions/auth';
 import Front from '../../assets/front_cut.JPG';
 
 const Container = styled.div`
+  margin-top: 75px;
   background-image: url(${(props) => props.img});
   width: 100vw;
   min-height: 100vh;
@@ -107,7 +108,6 @@ const Register = ({ isAuthenticated, registerUser, setAlert }) => {
 
   const onChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
-    console.log(formData);
   };
 
   const onSubmit = async (event) => {
@@ -121,7 +121,7 @@ const Register = ({ isAuthenticated, registerUser, setAlert }) => {
     }
 
     await registerUser({ firstName, lastName, email, password, phoneNumber });
-    console.log('submitted');
+    setAlert('Submitted');
   };
 
   if (isAuthenticated) {

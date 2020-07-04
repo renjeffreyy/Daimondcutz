@@ -65,11 +65,6 @@ router.post('/appointments', auth, async (req, res) => {
   const timeZone = 'America/Los_Angeles';
   const start = date;
   const end = moment(new Date(date)).add(45, 'm').toISOString();
-  console.log(start, end);
-  console.log(
-    moment(start).format('MMMM Do YYYY, h:mm:ss a'),
-    moment(end).format('MMMM Do YYYY, h:mm:ss a')
-  );
 
   try {
     const user = await User.findById(req.user.id).select('-password');
@@ -88,8 +83,6 @@ router.post('/appointments', auth, async (req, res) => {
       },
       colorId: 1,
     };
-
-    console.log(req.body);
 
     calendar.freebusy.query(
       {
@@ -169,9 +162,8 @@ router.delete('/appointments/:id', auth, async (req, res) => {
     if (appointment.userId.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'User not authorized' });
     }
-    console.log(appointment);
+
     await appointment.remove();
-    console.log(appointment);
 
     const start = appointment.startTime;
     const end = appointment.endTime;
@@ -184,7 +176,6 @@ router.delete('/appointments/:id', auth, async (req, res) => {
         }
 
         const eventId = response.data.items[0].id;
-        console.log(eventId);
 
         calendar.events.delete(
           {
@@ -201,7 +192,6 @@ router.delete('/appointments/:id', auth, async (req, res) => {
       }
     );
 
-    // console.log(eventId)
     res.json({ msg: 'appointment removed' });
   } catch (error) {
     console.error(error);

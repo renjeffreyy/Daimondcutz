@@ -58,7 +58,6 @@ const Schedule = ({
     setAppointmentDate({
       appointment: availableTimes[index],
     });
-    console.log(appointmentDate);
   };
 
   const appointmentCheck = (app) => {

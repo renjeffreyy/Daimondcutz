@@ -35,8 +35,6 @@ const event = {
   colorId: 1,
 };
 
-console.log(Date());
-
 const test = async () => {
   const cal = await calendar.freebusy.query({
     calendarId: 'primary',

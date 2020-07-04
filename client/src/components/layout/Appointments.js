@@ -5,7 +5,8 @@ import Schedule from '../scheduling/Schedule';
 import Calendar from '../scheduling/Calendar';
 
 const Container = styled.div`
-  margin-top: 100px;
+  margin-top: 75px;
+  background-color: #f0efeb;
 `;
 
 const Title = styled.p`

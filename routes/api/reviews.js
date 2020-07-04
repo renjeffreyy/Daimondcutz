@@ -62,7 +62,7 @@ router.post(
         stars,
         date,
       });
-      //   console.log(review);
+
       await review.save();
       res.send('Thank you for you review!');
     } catch (error) {

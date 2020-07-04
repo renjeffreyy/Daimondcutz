@@ -9,9 +9,10 @@ import { connect } from 'react-redux';
 import { loginUser } from '../../actions/auth';
 
 const Container = styled.div`
+  margin-top: 75px;
   background-image: url(${(props) => props.img});
   width: 100vw;
-  min-height: 100vh;
+  min-height: calc(100vh);
   background-size: cover;
   background-position: center;
   display: flex;

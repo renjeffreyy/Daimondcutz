@@ -38,7 +38,7 @@ const Container = styled.div`
   }
 
   .mobile-button {
-    transform: translateY(-100px);
+    transform: translateY(60px);
   }
 `;
 
@@ -61,10 +61,10 @@ const Button = styled.button`
   }
 `;
 
-const DaimondTitle = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
+const DaimondOverlay = styled.div`
+  width: 100vw;
+  height: 100vh;
+  /* position: absolute; */
   background-color: rgb(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
@@ -76,9 +76,11 @@ const DaimondTitle = styled.div`
   }
 
   img {
-    height: 450px;
+    height: 400px;
     max-width: 100vw;
-    transform: translateY(-100px);
+    transform-style: preserve-3d;
+    transform: translateY(90px);
+    /* transform: translateZ(0); */
 
     @media only screen and (min-width: 700px) {
       display: none;
@@ -90,12 +92,12 @@ const Landing = ({ isAuthenticated }) => {
   return (
     <Fragment>
       <Container>
-        <DaimondTitle>
+        <DaimondOverlay>
           <img src={Logo} alt="Daimond cut logo" />
           <Link className="appointment-link mobile-button" to="/Appointments">
             <Button>Appointments</Button>
           </Link>
-        </DaimondTitle>
+        </DaimondOverlay>
         <Link className="appointment-link desktop-button" to="/Appointments">
           <Button>Appointments</Button>
         </Link>

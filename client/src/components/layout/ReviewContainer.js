@@ -8,7 +8,7 @@ import ReviewSubmission from '../reviews/reviewSubmission.component';
 import { connect } from 'react-redux';
 
 const Container = styled.div`
-  margin-top: 100px;
+  margin-top: 75px;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;

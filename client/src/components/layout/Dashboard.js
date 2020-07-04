@@ -9,7 +9,7 @@ import { setAlert } from '../../actions/alert';
 import styled from 'styled-components';
 
 const DashboardContainer = styled.div`
-  margin-top: 90px;
+  margin-top: 75px;
   .welcome {
     text-align: center;
     font-size: 2rem;
@@ -78,12 +78,10 @@ const Dashboard = ({
 
   const cancelAppClick = (id) => {
     cancelAppointment(id);
-    console.log('appointment canceled clicked for: ', id);
   };
 
   const deleteUserReview = (id) => {
     deleteReview(id);
-    console.log(id);
   };
 
   const todaysDate = new Date().getTime();
