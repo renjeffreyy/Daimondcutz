@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import Login from '../components/auth/login.component';
 import Register from '../components/auth/Register.component';
 import Appointments from '../components/layout/Appointments';
-import Alert from '../components/layout/Alert';
+// import Alert from '../components/layout/Alert';
 import PrivateRoute from './PrivateRoutes.component';
 import Dashboard from '../components/layout/Dashboard';
 import ReviewContainer from '../components/layout/ReviewContainer';
@@ -13,7 +13,7 @@ import ReviewContainer from '../components/layout/ReviewContainer';
 const Routes = (props) => {
   return (
     <>
-      <Alert />
+      {/* <Alert /> */}
       <Switch>
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
         <Route exact path="/login" component={Login} />

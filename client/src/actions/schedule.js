@@ -103,7 +103,6 @@ export const bookAppointment = (time) => async (dispatch) => {
 export const getMyAppointments = () => async (dispatch) => {
   try {
     const res = await api.get('/calendar/appointments');
-    console.log(res);
     dispatch({ type: LOAD_APPOINTMENTS, payload: res.data });
   } catch (error) {
     console.log(error);
@@ -125,6 +124,6 @@ export const removeScheduledAppointment = (date, appointmentsArray) => (
   dispatch
 ) => {
   const newApptArray = appointmentsArray.filter((appt) => appt !== date);
-  console.log(date, newApptArray);
+
   dispatch({ type: GET_SCHEDULE_ON_DATE, payload: newApptArray });
 };

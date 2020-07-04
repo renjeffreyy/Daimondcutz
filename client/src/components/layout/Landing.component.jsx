@@ -26,7 +26,7 @@ const Container = styled.div`
 
   .appointment-link {
     grid-column: 4 / 5;
-    grid-row: 5/ 6;
+    grid-row: 6/ 7;
     justify-self: center;
     align-self: center;
   }
@@ -77,6 +77,7 @@ const DaimondTitle = styled.div`
 
   img {
     height: 450px;
+    max-width: 100vw;
     transform: translateY(-100px);
 
     @media only screen and (min-width: 700px) {

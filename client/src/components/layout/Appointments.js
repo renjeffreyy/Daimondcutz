@@ -4,7 +4,9 @@ import Schedule from '../scheduling/Schedule';
 //components
 import Calendar from '../scheduling/Calendar';
 
-const Container = styled.div``;
+const Container = styled.div`
+  margin-top: 100px;
+`;
 
 const Title = styled.p`
   font-size: 2rem;

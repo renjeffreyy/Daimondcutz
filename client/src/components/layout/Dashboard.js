@@ -9,6 +9,7 @@ import { setAlert } from '../../actions/alert';
 import styled from 'styled-components';
 
 const DashboardContainer = styled.div`
+  margin-top: 90px;
   .welcome {
     text-align: center;
     font-size: 2rem;

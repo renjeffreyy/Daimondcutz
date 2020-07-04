@@ -110,7 +110,7 @@ const Register = ({ isAuthenticated, registerUser, setAlert }) => {
     console.log(formData);
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
 
     if (password !== confirmPassword) {
@@ -120,7 +120,7 @@ const Register = ({ isAuthenticated, registerUser, setAlert }) => {
       return setAlert('Please follow specified phone number format');
     }
 
-    registerUser({ firstName, lastName, email, password, phoneNumber });
+    await registerUser({ firstName, lastName, email, password, phoneNumber });
     console.log('submitted');
   };
 
@@ -197,7 +197,7 @@ const Register = ({ isAuthenticated, registerUser, setAlert }) => {
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticateds,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { setAlert, registerUser })(Register);

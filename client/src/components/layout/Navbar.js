@@ -5,6 +5,7 @@ import { logOut } from '../../actions/auth';
 import logo from '../../assets/logo.png';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import Alert from '../layout/Alert';
 
 //redux
 import { connect } from 'react-redux';
@@ -13,14 +14,23 @@ const NavContainer = styled.div`
   img {
     height: 50px;
   }
+  .navbar-logo-link {
+    padding: 0;
+  }
 `;
 
 const Navbars = ({ isAuthenticated, logOut }) => {
   return (
     <NavContainer>
-      <Navbar expand="md" collapseOnSelect variant="dark" bg="dark">
+      <Navbar
+        className="fixed-top"
+        expand="md"
+        collapseOnSelect
+        variant="dark"
+        bg="dark"
+      >
         <Navbar.Brand>
-          <Nav.Link className="Nav" href="/">
+          <Nav.Link className="Nav navbar-logo-link" href="/">
             <img src={logo} alt="Daimond cut logo" />
           </Nav.Link>
         </Navbar.Brand>
@@ -59,6 +69,7 @@ const Navbars = ({ isAuthenticated, logOut }) => {
             )}
           </Nav>
         </Navbar.Collapse>
+        <Alert />
       </Navbar>
     </NavContainer>
   );

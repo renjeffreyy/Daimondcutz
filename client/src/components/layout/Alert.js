@@ -6,7 +6,8 @@ import styled from 'styled-components';
 const AlertDiv = styled.div`
   width: 100vw;
   padding: 10px;
-  background-color: red;
+  /* background-color: red; */
+  color: white;
 `;
 
 const Alert = ({ alerts }) =>

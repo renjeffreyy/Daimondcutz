@@ -8,24 +8,16 @@ import ReviewSubmission from '../reviews/reviewSubmission.component';
 import { connect } from 'react-redux';
 
 const Container = styled.div`
-  /* width: 100vw;
-  height: 100vh;
-  display: grid; */
-  /* grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: repeat(10, 1fr); */
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
 
   .userReviews {
-    /* grid-row: 2 /7;
-    grid-column: 2/10; */
     height: 400px;
   }
 
   .reviewSubmission {
-    /* grid-row: 7 /10;
-    grid-column: 2/10; */
     min-height: 250px;
   }
 `;
